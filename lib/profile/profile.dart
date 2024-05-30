@@ -12,7 +12,7 @@ class _ProfileState extends State<Profile> {
     return Container(
       color: Colors.black,
       child: const Center(
-        child: Text("your profile",style: TextStyle(color:Colors.white),),
+        child: Text("your profile is being built ",style: TextStyle(color:Colors.white),),
       ),
     );
   }
