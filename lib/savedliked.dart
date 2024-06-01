@@ -20,7 +20,7 @@ class AllLikedPage extends StatelessWidget {
           stream: _firestore.collection('liked_movies').snapshots(),
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
-              return Center(
+              return const Center(
                 child: CircularProgressIndicator(),
               );
             }
@@ -31,7 +31,7 @@ class AllLikedPage extends StatelessWidget {
             }
 
             if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
-              return Center(
+              return const Center(
                 child: Text('No liked movies found.'),
               );
             }

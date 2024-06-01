@@ -7,8 +7,6 @@ import '../description.dart';
 import '../savedliked.dart';
 import 'package:firebase_core/firebase_core.dart';
 
-
-
 class HomePage extends StatefulWidget {
   @override
   _HomePageState createState() => _HomePageState();
@@ -203,6 +201,7 @@ class _HomePageState extends State<HomePage> {
         autoPlay: autoPlay,
         aspectRatio: 2.0,
         enlargeCenterPage: true,
+        scrollPhysics: BouncingScrollPhysics(),
       ),
       items: _filteredImageData.asMap().entries.map((entry) {
         int index = entry.key;
@@ -211,6 +210,7 @@ class _HomePageState extends State<HomePage> {
 
         return Builder(
           builder: (BuildContext context) {
+            final String heroTag = 'movieImage${data['url']}';
             return GestureDetector(
               onTap: () {
                 Navigator.push(
@@ -221,31 +221,36 @@ class _HomePageState extends State<HomePage> {
                       title: data['title'],
                       year: data['year'],
                       videoUrl: 'https://youtu.be/gmA6MrX81z4?si=XD-n1kqmOJ_Ekp9H',
+                      imageUrl: data['url'],
+                      heroTag: heroTag,
                     ),
                   ),
                 );
               },
               child: Stack(
                 children: [
-                  Container(
-                    height: 220,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(15),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.black26,
-                          blurRadius: 8,
-                          offset: Offset(0, 2),
+                  Hero(
+                    tag: heroTag,
+                    child: Container(
+                      height: 220,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(15),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.black26,
+                            blurRadius: 8,
+                            offset: Offset(0, 2),
+                          ),
+                        ],
+                      ),
+                      width: MediaQuery.of(context).size.width,
+                      margin: EdgeInsets.symmetric(horizontal: 5.0),
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(15),
+                        child: Image.network(
+                          data['url'],
+                          fit: BoxFit.cover,
                         ),
-                      ],
-                    ),
-                    width: MediaQuery.of(context).size.width,
-                    margin: EdgeInsets.symmetric(horizontal: 5.0),
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.circular(15),
-                      child: Image.network(
-                        data['url'],
-                        fit: BoxFit.cover,
                       ),
                     ),
                   ),
